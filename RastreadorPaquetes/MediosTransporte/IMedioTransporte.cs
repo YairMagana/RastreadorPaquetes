@@ -2,7 +2,7 @@
 {
     public interface IMedioTransporte
     {
-        int cNombre { get; set; }
+        string cNombre { get; set; }
         double dCosto { get; set; }
         double dVelocidadEntrega { get; set; }
     }

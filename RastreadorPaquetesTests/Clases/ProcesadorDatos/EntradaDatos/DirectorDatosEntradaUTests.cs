@@ -31,5 +31,33 @@ namespace RastreadorPaquetes.Tests
             //Assert
             Assert.IsInstanceOfType(DOCIDatosEntrada.Object, resultado.GetType());
         }
+
+        [TestMethod()]
+        public void ContruirDatosEntrada_VerificarDevolucionDeObjetoDatosEntradaConExcepcion_MensajeDeExcepcion()
+        {
+            //Arrange
+            var DOCIDatosEntrada = new Mock<IDatosEntrada>();
+
+            var DOCIConstructorDatosEntrada = new Mock<IConstructorDatosEntrada>();
+            DOCIConstructorDatosEntrada.Setup(s => s.EstablecerCampoOrigen(It.IsAny<string>())).Throws(new Exception("Excepción"));
+
+            string[] datos = new string[] { "" };
+
+            var SUT = new DirectorDatosEntrada(datos, DOCIConstructorDatosEntrada.Object);
+            var v = string.Empty;
+
+            //Act
+            try
+            {
+                SUT.ContruirDatosEntrada();
+            }
+            catch (Exception ex)
+            {
+                v = ex.Message;
+            }
+
+            //Assert
+            Assert.AreEqual("Excepción", v);
+        }
     }
 }

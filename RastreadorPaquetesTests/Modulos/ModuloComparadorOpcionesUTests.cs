@@ -26,7 +26,6 @@ namespace RastreadorPaquetes.Tests
             var DOCFabricaMediosTransporte = new Mock<IFabricaMediosTransporte>();
             DOCFabricaMediosTransporte.Setup(s => s.FabricarMedioTransporte(It.IsAny<string>())).Returns(DOCIMedioTransporte.Object);
 
-
             var DOCIEmpresa = new Mock<IEmpresa>();
             DOCIEmpresa.Setup(s => s.cNombre).Returns("Y");
             DOCIEmpresa.Setup(s => s.dMargenUtilidad).Returns(0);

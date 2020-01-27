@@ -34,9 +34,6 @@ namespace RastreadorPaquetes.Tests
 
             var DOCdatosSalida = new Mock<DatosSalida>();
 
-            DateTime dt1 = new DateTime(2019, 01, 01, 0, 0, 0);
-            DateTime dt2 = new DateTime(2019, 01, 01, 10, 0, 0);
-
             var SUT = new DirectorMensajeSalida(DOCDirectorDatosEntrada.Object, DOCConstructorDatosSalida.Object, DOCdatosSalida.Object);
 
             //Act
@@ -44,7 +41,26 @@ namespace RastreadorPaquetes.Tests
 
             //Assert
             Assert.AreEqual("Tu paquete A de B y C a D E F y G un costo de $1.00 (Cualquier reclamación con H).", resultado.cMensaje);
+        }
 
+        [TestMethod()]
+        public void ConstruirMensajeSalida_ProbarLaConstruccionDeLaCadenaResultadoConExcepcion_CadenaDeMensajeDeExcepcion()
+        {
+            //Arrange
+
+            var DOCDirectorDatosEntrada = new Mock<IDirectorDatosEntrada>();
+            DOCDirectorDatosEntrada.Setup(s => s.ContruirDatosEntrada()).Throws(new Exception("Excepción"));
+            var DOCConstructorDatosSalida = new Mock<IConstructorDatosSalida>();
+
+            var DOCdatosSalida = new Mock<DatosSalida>();
+
+            var SUT = new DirectorMensajeSalida(DOCDirectorDatosEntrada.Object, DOCConstructorDatosSalida.Object, DOCdatosSalida.Object);
+
+            //Act
+            var resultado = SUT.ConstruirMensajeSalida();
+
+            //Assert
+            Assert.AreEqual("Excepción", resultado.cMensaje);
         }
     }
 }

@@ -24,7 +24,7 @@ public class Nueva_Empresa : IEmpresa
 }
 ```
 
-Añadir la nueva opción en la clase de Fabrica/Estrategia FabricaEmpresas.cs:
+Añadir la nueva opción en la clase de Fabrica/Estrategia *FabricaEmpresas.cs*:
 
 ```c#
     public class FabricaEmpresas : IFabricaEmpresas
@@ -60,7 +60,7 @@ public class Nuevo_Medio : IMedioTransporte
     }
 ```
 
-Añadir la nueva opción en la clase de Fabrica/Estrategia FabricaMediosTransporte.cs:
+Añadir la nueva opción en la clase de Fabrica/Estrategia *FabricaMediosTransporte.cs*:
 
 ```c#
 public IMedioTransporte FabricarMedioTransporte(string _nombre)
@@ -80,8 +80,9 @@ public IMedioTransporte FabricarMedioTransporte(string _nombre)
 ```
 
 ### Módulo de comparación de Opciones más baratas
-Para agregar las nuevas empresas o medios de trasnsporte al módulo de Obtención de Entrega más barata, se debe 
+Para agregar las nuevas empresas o medios de trasnsporte al módulo de Obtención de Entrega  más barata *ModuloComparadorOpciones.cs*.
 
+Ejemplo:
 ```c#
 public ModuloComparadorOpciones(IFabricaEmpresas _fabricaEmpresas, IFabricaMediosTransporte _fabricaMediosTransporte)
         {

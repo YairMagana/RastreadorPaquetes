@@ -64,7 +64,7 @@ namespace RastreadorPaquetes
                     // Móulo Comparador de Costos
                     if (datosSalida.color != ConsoleColor.Red)
                     {
-                        string mensajeComparacion = moduloComparadorOpciones.CompararOpciones(datosEntrada.objEmpresa.cNombre,
+                        string mensajeComparacion = moduloComparadorOpciones.GenerarMensajeOpcionOptima(datosEntrada.objEmpresa.cNombre,
                             datosEntrada.objMedioTransporte,
                             datosEntrada.dCostoEnvio,
                             datosEntrada.dDistancia);

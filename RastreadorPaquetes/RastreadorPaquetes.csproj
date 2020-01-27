@@ -53,8 +53,8 @@
     <Compile Include="Clases\Argumentos\ObtenedorTextoPrimerArgumento.cs" />
     <Compile Include="Clases\ProcesadorDatos\EntradaDatos\DivisorLinea.cs" />
     <Compile Include="Clases\ProcesadorDatos\EntradaDatos\IDivisorLinea.cs" />
-    <Compile Include="Clases\ProcesadorDatos\EntradaDatos\DatosEntrada.cs" />
-    <Compile Include="Clases\ProcesadorDatos\EntradaDatos\IDatosEntrada.cs" />
+    <Compile Include="Datos\DatosEntrada.cs" />
+    <Compile Include="Datos\IDatosEntrada.cs" />
     <Compile Include="Clases\ProcesadorDatos\EntradaDatos\DirectorDatosEntrada.cs" />
     <Compile Include="Clases\ProcesadorDatos\SalidaDatos\ConvertidorRangoTiempoAPalabras\ConvertidorRangoTiempoDias.cs" />
     <Compile Include="Clases\ProcesadorDatos\SalidaDatos\ConvertidorRangoTiempoAPalabras\ConvertidorRangoTiempoHoras.cs" />
@@ -72,11 +72,11 @@
     <Compile Include="Empresas\IFabricaEmpresas.cs" />
     <Compile Include="Clases\ProcesadorDatos\EntradaDatos\IConstructorDatosEntrada.cs" />
     <Compile Include="Clases\ProcesadorDatos\EntradaDatos\IDirectorDatosEntrada.cs" />
-    <Compile Include="Clases\ProcesadorDatos\SalidaDatos\IDatosSalida.cs" />
+    <Compile Include="Datos\IDatosSalida.cs" />
     <Compile Include="Clases\ProcesadorDatos\SalidaDatos\IConstructorDatosSalida.cs" />
     <Compile Include="Clases\ProcesadorDatos\SalidaDatos\IDirectorMensajeSalida.cs" />
     <Compile Include="Clases\Salida\IDesplegador.cs" />
-    <Compile Include="IModuloComparadorOpciones.cs" />
+    <Compile Include="Modulos\IModuloComparadorOpciones.cs" />
     <Compile Include="MediosTransporte\FabricaMediosTransporte.cs" />
     <Compile Include="MediosTransporte\IFabricaMediosTransporte.cs" />
     <Compile Include="MediosTransporte\Avion.cs" />
@@ -84,13 +84,14 @@
     <Compile Include="MediosTransporte\IMedioTransporte.cs" />
     <Compile Include="MediosTransporte\Tren.cs" />
     <Compile Include="Clases\ProcesadorDatos\EntradaDatos\ConstructorDatosEntrada.cs" />
-    <Compile Include="Clases\ProcesadorDatos\SalidaDatos\DatosSalida.cs" />
-    <Compile Include="ModuloComparadorOpciones.cs" />
+    <Compile Include="Datos\DatosSalida.cs" />
+    <Compile Include="Modulos\ModuloComparadorOpciones.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="entregas.csv" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

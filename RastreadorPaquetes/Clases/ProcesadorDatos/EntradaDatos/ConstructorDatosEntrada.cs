@@ -15,11 +15,6 @@ namespace RastreadorPaquetes
             fabricaMediosTransporte = _fabricaMediosTransporte;
         }
 
-        /*public void InicializarConstructor()
-        {
-            datosEntrada = new DatosEntrada();
-        }*/
-
         public IDatosEntrada ObtenerDatosEntrada()
         {
             return datosEntrada;
@@ -43,16 +38,13 @@ namespace RastreadorPaquetes
 
         public void EstablecerCampoDistancia(string _dato)
         {
-            try
-            {
-                double dDistancia;
-                double.TryParse(_dato, out dDistancia);
+
+            double dDistancia;
+            if (double.TryParse(_dato, out dDistancia))
                 datosEntrada.dDistancia = dDistancia;
-            }
-            catch
-            {
+            else
                 throw new Exception("Distancia inválida");
-            }
+
         }
 
         public void EstablecerCampoEmpresa(string _dato)
@@ -85,16 +77,13 @@ namespace RastreadorPaquetes
 
         public void EstablecerCampoFechaPedido(string _dato)
         {
-            try
-            {
-                DateTime dtFechaPedido;
-                DateTime.TryParse(_dato, out dtFechaPedido);
+
+            DateTime dtFechaPedido;
+            if (DateTime.TryParse(_dato, out dtFechaPedido))
                 datosEntrada.dtFechaPedido = dtFechaPedido;
-            }
-            catch
-            {
+            else
                 throw new Exception("Fecha de Pedido inválida");
-            }
+
         }
 
         public void EstablecerCampoTiempoTraslado()
@@ -120,7 +109,7 @@ namespace RastreadorPaquetes
             }
             catch (Exception ex)
             {
-                throw new Exception("Fecha de Entrega inválido. " + ex);
+                throw new Exception("Fecha de Entrega inválida. " + ex);
             }
         }
 

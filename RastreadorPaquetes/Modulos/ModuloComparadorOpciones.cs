@@ -20,7 +20,7 @@ namespace RastreadorPaquetes
                 _fabricaMediosTransporte.FabricarMedioTransporte("Avión") };
         }
 
-        public string CompararOpciones(string _cEmpresaActual, IMedioTransporte _medioTransporteActual, double _dCostoActual, double _dDistancia)
+        public string GenerarMensajeOpcionOptima(string _cEmpresaActual, IMedioTransporte _medioTransporteActual, double _dCostoActual, double _dDistancia)
         {
             string v = string.Empty;
             KeyValuePair<string, double> empresaMenorCosto = ObtenerEmpresaMenorCosto(_dDistancia, _cEmpresaActual, _medioTransporteActual);

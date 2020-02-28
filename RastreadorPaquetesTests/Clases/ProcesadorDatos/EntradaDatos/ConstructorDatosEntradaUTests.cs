@@ -49,6 +49,32 @@ namespace RastreadorPaquetes.Tests
         }
 
         [TestMethod()]
+        public void EstablecerCampoOrigen_EstablecimientoDelCampoOrigenInvalido_Excepcion()
+        {
+            //Arrange
+            string resultado = string.Empty;
+            var DOCDatosEntrada = new Mock<DatosEntrada>();
+
+            var DOCFabricaEmpresas = new Mock<IFabricaEmpresas>();
+            var DOCFabricaMediosTransporte = new Mock<IFabricaMediosTransporte>();
+
+            var SUT = new ConstructorDatosEntrada(DOCDatosEntrada.Object, DOCFabricaEmpresas.Object, DOCFabricaMediosTransporte.Object);
+
+            //Act
+            try
+            {
+                SUT.EstablecerCampoOrigen("");
+            }
+            catch (Exception ex)
+            {
+                resultado = ex.Message;
+            }
+
+            //Assert
+            Assert.AreEqual("Origen inválido", resultado);
+        }
+
+        [TestMethod()]
         public void EstablecerCampoDestino_EstablecimientoDelCampoDestino_ObjetoDatosEntradaConDestino()
         {
             //Arrange
@@ -64,6 +90,32 @@ namespace RastreadorPaquetes.Tests
 
             //Assert
             Assert.AreEqual("X", DOCDatosEntrada.Object.cDestino);
+        }
+
+        [TestMethod()]
+        public void EstablecerCampoDestino_EstablecimientoDelCampoDestinoInvalido_Excepcion()
+        {
+            //Arrange
+            string resultado = string.Empty;
+            var DOCDatosEntrada = new Mock<DatosEntrada>();
+
+            var DOCFabricaEmpresas = new Mock<IFabricaEmpresas>();
+            var DOCFabricaMediosTransporte = new Mock<IFabricaMediosTransporte>();
+
+            var SUT = new ConstructorDatosEntrada(DOCDatosEntrada.Object, DOCFabricaEmpresas.Object, DOCFabricaMediosTransporte.Object);
+
+            //Act
+            try
+            {
+                SUT.EstablecerCampoDestino("");
+            }
+            catch (Exception ex)
+            {
+                resultado = ex.Message;
+            }
+
+            //Assert
+            Assert.AreEqual("Destino inválido", resultado);
         }
 
         [TestMethod()]
@@ -130,6 +182,33 @@ namespace RastreadorPaquetes.Tests
         }
 
         [TestMethod()]
+        public void EstablecerCampoEmpresa_EstablecimientoDelCampoEmpresaInvalida_Excepcion()
+        {
+            //Arrange
+            string resultado = string.Empty;
+            var DOCDatosEntrada = new Mock<DatosEntrada>();
+
+            var DOCEmpresa = new Mock<IEmpresa>();
+            var DOCFabricaEmpresas = new Mock<IFabricaEmpresas>();
+            DOCFabricaEmpresas.Setup(s => s.FabricarEmpresa(It.IsAny<string>())).Throws(new Exception("Empresa no existe."));
+            var DOCFabricaMediosTransporte = new Mock<IFabricaMediosTransporte>();
+
+            var SUT = new ConstructorDatosEntrada(DOCDatosEntrada.Object, DOCFabricaEmpresas.Object, DOCFabricaMediosTransporte.Object);
+
+            //Act
+            try
+            {
+                SUT.EstablecerCampoEmpresa("");
+            }catch (Exception ex)
+            {
+                resultado = ex.Message;
+            }
+
+            //Assert
+            Assert.AreEqual("Empresa no existe.", resultado);
+        }
+
+        [TestMethod()]
         public void EstablecerCampoMedioTransporte_EstablecimientoDelCampoMedioTransporte_ObjetoDatosEntradaConObjetoMedioTransporte()
         {
             //Arrange
@@ -155,6 +234,35 @@ namespace RastreadorPaquetes.Tests
         }
 
         [TestMethod()]
+        public void EstablecerCampoMedioTransporte_EstablecimientoDelCampoMedioTransporteInvalido_Excepcion()
+        {
+            //Arrange
+            string resultado = string.Empty;
+            var DOCDatosEntrada = new Mock<DatosEntrada>();
+
+            var DOCEmpresa = new Mock<IEmpresa>();
+            var DOCFabricaEmpresas = new Mock<IFabricaEmpresas>();
+
+            var DOCIMedioTransporte = new Mock<IMedioTransporte>();
+            var DOCFabricaMediosTransporte = new Mock<IFabricaMediosTransporte>();
+            DOCFabricaMediosTransporte.Setup(s => s.FabricarMedioTransporte(It.IsAny<string>())).Throws(new Exception("Transporte no Existe."));
+
+            var SUT = new ConstructorDatosEntrada(DOCDatosEntrada.Object, DOCFabricaEmpresas.Object, DOCFabricaMediosTransporte.Object);
+
+            //Act
+            try
+            {
+                SUT.EstablecerCampoMedioTransporte("");
+            }catch (Exception ex)
+            {
+                resultado = ex.Message;
+            }
+
+            //Assert
+            Assert.AreEqual("Transporte no Existe.", resultado);
+        }
+
+        [TestMethod()]
         public void EstablecerCampoFechaPedido_EstablecimientoDelCampoFechaPedido_ObjetoDatosEntradaConFechaPedido()
         {
             //Arrange
@@ -170,6 +278,31 @@ namespace RastreadorPaquetes.Tests
 
             //Assert
             Assert.AreEqual(new DateTime(2020,01,01), DOCDatosEntrada.Object.dtFechaPedido);
+        }
+
+        [TestMethod()]
+        public void EstablecerCampoFechaPedido_EstablecimientoDelCampoFechaPedidoInvalido_Excepcion()
+        {
+            //Arrange
+            string resultado = string.Empty;
+            var DOCDatosEntrada = new Mock<DatosEntrada>();
+
+            var DOCFabricaEmpresas = new Mock<IFabricaEmpresas>();
+            var DOCFabricaMediosTransporte = new Mock<IFabricaMediosTransporte>();
+
+            var SUT = new ConstructorDatosEntrada(DOCDatosEntrada.Object, DOCFabricaEmpresas.Object, DOCFabricaMediosTransporte.Object);
+
+            //Act
+            try
+            {
+                SUT.EstablecerCampoFechaPedido("99/99/2020");
+            }catch(Exception ex)
+            {
+                resultado = ex.Message;
+            }
+
+            //Assert
+            Assert.AreEqual("Fecha de Pedido inválida", resultado);
         }
 
         [TestMethod()]
@@ -196,6 +329,36 @@ namespace RastreadorPaquetes.Tests
         }
 
         [TestMethod()]
+        public void EstablecerCampoTiempoTraslado_EstablecimientoDelCampoTiempoTrasladoInvalido_Excepcion()
+        {
+            //Arrange
+            string resultado = string.Empty;
+            var DOCDatosEntrada = new Mock<DatosEntrada>();
+            DOCDatosEntrada.Object.dDistancia = 1;
+
+            var DOCFabricaEmpresas = new Mock<IFabricaEmpresas>();
+            var DOCFabricaMediosTransporte = new Mock<IFabricaMediosTransporte>();
+
+            var DOCMedioTransporte = new Mock<IMedioTransporte>();
+            DOCMedioTransporte.Setup(s => s.dVelocidadEntrega).Throws(new Exception("Tiempo de Traslado inválido."));
+            DOCDatosEntrada.Object.objMedioTransporte = DOCMedioTransporte.Object;
+
+            var SUT = new ConstructorDatosEntrada(DOCDatosEntrada.Object, DOCFabricaEmpresas.Object, DOCFabricaMediosTransporte.Object);
+
+            //Act
+            try
+            {
+                SUT.EstablecerCampoTiempoTraslado();
+            } catch (Exception ex)
+            {
+                resultado = ex.Message;
+            }
+
+            //Assert
+            StringAssert.StartsWith(resultado, "Tiempo de Traslado inválido.");
+        }
+
+        [TestMethod()]
         public void EstablecerCampoFechaEntrega_EstablecimientoDelCampoFechaEntrega_ObjetoDatosEntradaConFechaEntrega()
         {
             //Arrange
@@ -213,6 +376,33 @@ namespace RastreadorPaquetes.Tests
 
             //Assert
             Assert.AreEqual(new DateTime(2020, 01, 01,01,00,00), DOCDatosEntrada.Object.dtFechaEntrega);
+        }
+
+        [TestMethod()]
+        public void EstablecerCampoFechaEntrega_EstablecimientoDelCampoFechaEntregaInvalida_Exception()
+        {
+            //Arrange
+            string resultado = string.Empty;
+            var DOCDatosEntrada = new Mock<DatosEntrada>();
+            DOCDatosEntrada.Object.dtFechaPedido = new DateTime(2020, 01, 01);
+            DOCDatosEntrada.Object.dTiempoTraslado = double.MaxValue;
+
+            var DOCFabricaEmpresas = new Mock<IFabricaEmpresas>();
+            var DOCFabricaMediosTransporte = new Mock<IFabricaMediosTransporte>();
+
+            var SUT = new ConstructorDatosEntrada(DOCDatosEntrada.Object, DOCFabricaEmpresas.Object, DOCFabricaMediosTransporte.Object);
+
+            //Act
+            try
+            {
+                SUT.EstablecerCampoFechaEntrega();
+            } catch (Exception ex)
+            {
+                resultado = ex.Message;
+            }
+
+            //Assert
+            StringAssert.StartsWith(resultado, "Fecha de Entrega inválida.");
         }
 
         [TestMethod()]
@@ -241,6 +431,41 @@ namespace RastreadorPaquetes.Tests
 
             //Assert
             Assert.AreEqual(1, DOCDatosEntrada.Object.dCostoEnvio);
+        }
+
+        [TestMethod()]
+        public void EstablecerCampoCostoEnvio_EstablecimientoDelCampoCostoEnvioInvalido_Excepcion()
+        {
+            //Arrange
+            string resultado = string.Empty;
+            var DOCDatosEntrada = new Mock<DatosEntrada>();
+            DOCDatosEntrada.Object.dtFechaPedido = new DateTime(2020, 01, 01);
+            DOCDatosEntrada.Object.dDistancia = 1;
+
+            var DOCFabricaEmpresas = new Mock<IFabricaEmpresas>();
+            var DOCFabricaMediosTransporte = new Mock<IFabricaMediosTransporte>();
+
+            var DOCMedioTransporte = new Mock<IMedioTransporte>();
+            DOCMedioTransporte.Setup(s => s.dCosto).Returns(1);
+            DOCDatosEntrada.Object.objMedioTransporte = DOCMedioTransporte.Object;
+
+            var DOCIEmpresa = new Mock<IEmpresa>();
+            DOCIEmpresa.Setup(s => s.dMargenUtilidad).Throws(new Exception("Costo de Envío inválido."));
+            DOCDatosEntrada.Object.objEmpresa = DOCIEmpresa.Object;
+
+            var SUT = new ConstructorDatosEntrada(DOCDatosEntrada.Object, DOCFabricaEmpresas.Object, DOCFabricaMediosTransporte.Object);
+
+            //Act
+            try
+            {
+                SUT.EstablecerCampoCostoEnvio();
+            }catch(Exception ex)
+            {
+                resultado = ex.Message;
+            }
+
+            //Assert
+            StringAssert.StartsWith(resultado, "Costo de Envío inválido.");
         }
     }
 }

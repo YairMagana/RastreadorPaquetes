@@ -70,6 +70,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Clases\Archivos\ObtenedorRegistrosArchivoListaStringsUTests.cs" />
+    <Compile Include="Clases\Archivos\ValidarArchivoTextoUTests.cs" />
     <Compile Include="Clases\Argumentos\ObtenedorTextoPrimerArgumentoUTests.cs" />
     <Compile Include="Clases\ProcesadorDatos\EntradaDatos\ConstructorDatosEntradaUTests.cs" />
     <Compile Include="Clases\ProcesadorDatos\EntradaDatos\DirectorDatosEntradaUTests.cs" />
@@ -80,7 +81,11 @@
     <Compile Include="Clases\ProcesadorDatos\SalidaDatos\ConvertidorRangoTiempoAPalabras\ConvertidorRangoTiempoHorasUTests.cs" />
     <Compile Include="Clases\ProcesadorDatos\SalidaDatos\ConvertidorRangoTiempoAPalabras\ConvertidorRangoTiempoMinutosUTests.cs" />
     <Compile Include="Clases\ProcesadorDatos\SalidaDatos\DirectorMensajeSalidaUTests.cs" />
+    <Compile Include="Clases\Salida\DesplegadorUTests.cs" />
+    <Compile Include="Empresas\DHLUTests.cs" />
+    <Compile Include="Empresas\EstafetaUTests.cs" />
     <Compile Include="Empresas\FabricaEmpresasUTests.cs" />
+    <Compile Include="Empresas\FedexUTests.cs" />
     <Compile Include="MediosTransporte\FabricaMediosTransporteUTests.cs" />
     <Compile Include="Modulos\ModuloComparadorOpcionesUTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

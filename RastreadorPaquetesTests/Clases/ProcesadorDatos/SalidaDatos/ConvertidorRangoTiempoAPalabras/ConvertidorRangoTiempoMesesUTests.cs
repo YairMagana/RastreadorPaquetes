@@ -13,6 +13,20 @@ namespace RastreadorPaquetes.Tests
     public class ConvertidorRangoTiempoMesesUTests
     {
         [TestMethod()]
+        public void EstablecerSiguienteConvertidor_EstablecerObjetoEnClase_DevolverObjetoPasadoComoArgemento()
+        {
+            //Arrange
+            var SUT = new ConvertidorRangoTiempoMeses();
+            var Objeto = new ConvertidorRangoTiempoMeses();
+
+            //Act
+            var resultado = SUT.EstablecerSiguienteConvertidor(Objeto);
+
+            //Assert
+            Assert.IsInstanceOfType(resultado, Objeto.GetType());
+        }
+
+        [TestMethod()]
         public void ConvertirRangoTiempoAPalabras_DeterminarDiferenciaEnMeses_TextoConDiferenciaEnMeses()
         {
             //Arrange

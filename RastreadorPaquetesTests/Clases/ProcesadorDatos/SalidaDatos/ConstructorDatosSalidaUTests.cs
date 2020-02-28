@@ -165,6 +165,25 @@ namespace RastreadorPaquetes.Tests
         }
 
         [TestMethod()]
+        public void GenerarRangoTiempo_ObtenerCadenaConTiempo_TiempoEnPalabras()
+        {
+            //Arrange
+            var DOCConstructorDatosSalida = new Mock<IConvertidorRangoTiempo>();
+            DOCConstructorDatosSalida.Setup(s => s.ConvertirRangoTiempoAPalabras(It.IsAny<DateTime>(), It.IsAny<DateTime>())).Returns("Tiempo calculado");
+
+            DateTime dt1 = new DateTime(2019, 01, 01, 0, 0, 0);
+
+            var SUT = new ConstructorDatosSalida(DOCConstructorDatosSalida.Object);
+            SUT.dtFechaBase = dt1;
+
+            //Act
+            var resultado = SUT.GenerarRangoTiempo(dt1);
+
+            //Assert
+            Assert.AreEqual("Tiempo calculado", resultado);
+        }
+
+        [TestMethod()]
         public void GenerarColor_FechaActualMenorAFechaEntrega_Entero1()
         {
             //Arrange

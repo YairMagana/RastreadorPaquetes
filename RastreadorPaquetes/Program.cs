@@ -6,6 +6,9 @@ namespace RastreadorPaquetes
     {
         static void Main(string[] args)
         {
+            // ** Desplegador
+            IDesplegador desplegador = new Desplegador();
+
             try
             {
                 /*** SERVICIOS ***/
@@ -37,52 +40,58 @@ namespace RastreadorPaquetes
                 IDatosEntrada datosEntrada = new DatosEntrada();
                 IDatosSalida datosSalida = new DatosSalida(); ;
 
-                IConstructorDatosEntrada constructorDatosEntrada = new ConstructorDatosEntrada(datosEntrada, fabricaEmpresas, fabricaMediosTransporte);
-                IDirectorDatosEntrada directorDatosEntrada;
-
-                IConstructorDatosSalida constructorDatosSalida = new ConstructorDatosSalida(convertidorRangoMinutos);
-                IDirectorMensajeSalida directorMensajeSalida;
-
-                // ** Desplegador
-                IDesplegador desplegador = new Desplegador();
-
                 // ** Modulo Comparador de Opciones
                 IModuloComparadorOpciones moduloComparadorOpciones = new ModuloComparadorOpciones(fabricaEmpresas, fabricaMediosTransporte);
-
-                foreach (string registro in obtenedorContenidoArchivoListaStrings.ObtenerRegistrosArchivo())
-                {
-                    // Dividir los campos
-                    directorDatosEntrada = new DirectorDatosEntrada(divisorLinea.DividirLinea(registro, 6), constructorDatosEntrada);
-
-                    // Generar los mensajes de salida
-                    datosSalida = new DatosSalida();
-                    directorMensajeSalida = new DirectorMensajeSalida(directorDatosEntrada, constructorDatosSalida, datosSalida);
-                    
-                    // Mostrar Datos
-                    desplegador.Desplegar(directorMensajeSalida.ConstruirMensajeSalida());
-
-                    // Móulo Comparador de Costos
-                    if (datosSalida.color != ConsoleColor.Red)
-                    {
-                        string mensajeComparacion = moduloComparadorOpciones.GenerarMensajeOpcionOptima(datosEntrada.objEmpresa.cNombre,
-                            datosEntrada.objMedioTransporte,
-                            datosEntrada.dCostoEnvio,
-                            datosEntrada.dDistancia);
-                        // Mostrar resultado del módulo
-                        datosSalida.cMensaje = mensajeComparacion;
-                        datosSalida.color = ConsoleColor.White;
-                        desplegador.Desplegar(datosSalida);
-                    }
-                }
-
+                RastrearPaquetes(obtenedorContenidoArchivoListaStrings, divisorLinea, fabricaEmpresas, fabricaMediosTransporte, convertidorRangoMinutos, datosEntrada, datosSalida, desplegador, moduloComparadorOpciones);
             }
             catch (Exception ex)
             {
                 string texto = $"Ha ocurrido un error: {ex.Message}";
-                Console.WriteLine(texto);
+                desplegador.DesplegarMensaje(texto);
             }
+        }
 
-            Console.ReadKey();
+        private static void RastrearPaquetes(IObtenedorRegistrosArchivoListaStrings obtenedorContenidoArchivoListaStrings, IDivisorLinea divisorLinea, IFabricaEmpresas fabricaEmpresas,
+            IFabricaMediosTransporte fabricaMediosTransporte, IConvertidorRangoTiempo convertidorRangoMinutos, IDatosEntrada datosEntrada, IDatosSalida datosSalida, IDesplegador desplegador, IModuloComparadorOpciones moduloComparadorOpciones)
+        {
+            // Builders de Datos de Entrada y Salida
+            IConstructorDatosEntrada constructorDatosEntrada = new ConstructorDatosEntrada(datosEntrada, fabricaEmpresas, fabricaMediosTransporte);
+            IDirectorDatosEntrada directorDatosEntrada;
+            IConstructorDatosSalida constructorDatosSalida = new ConstructorDatosSalida(convertidorRangoMinutos);
+            IDirectorMensajeSalida directorMensajeSalida;
+
+            // Por cada línea del archivo se calculan los datos
+            foreach (string registro in obtenedorContenidoArchivoListaStrings.ObtenerRegistrosArchivo())
+            {
+                // Dividir los campos
+                directorDatosEntrada = new DirectorDatosEntrada(divisorLinea.DividirLinea(registro, 6), constructorDatosEntrada);
+
+                // Generar los mensajes de salida
+                datosSalida = new DatosSalida();
+                directorMensajeSalida = new DirectorMensajeSalida(directorDatosEntrada, constructorDatosSalida, datosSalida);
+                datosSalida = directorMensajeSalida.ConstruirMensajeSalida();
+
+                // Almacenar en buffer
+                desplegador.GuardarEnBuffer(datosSalida.cMensaje, datosSalida.color);
+
+                // Móulo Comparador de Costos
+                CompararCostos(datosEntrada, datosSalida, desplegador, moduloComparadorOpciones);
+            }
+            // Mostrar Datos
+            desplegador.Desplegar();
+        }
+
+        private static void CompararCostos(IDatosEntrada datosEntrada, IDatosSalida datosSalida, IDesplegador desplegador, IModuloComparadorOpciones moduloComparadorOpciones)
+        {
+            if (datosSalida.color != ConsoleColor.Red)
+            {
+                string mensajeComparacion = moduloComparadorOpciones.GenerarMensajeOpcionOptima(datosEntrada.objEmpresa.cNombre,
+                    datosEntrada.objMedioTransporte,
+                    datosEntrada.dCostoEnvio,
+                    datosEntrada.dDistancia);
+                // Mostrar resultado del módulo
+                desplegador.GuardarEnBuffer(mensajeComparacion, ConsoleColor.White);
+            }
         }
     }
 }

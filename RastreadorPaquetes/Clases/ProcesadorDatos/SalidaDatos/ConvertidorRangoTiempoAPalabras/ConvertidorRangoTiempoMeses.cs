@@ -16,7 +16,7 @@ namespace RastreadorPaquetes
         {
             string v = string.Empty;
             double diasTranscurridos = (dt1 - dt2).TotalDays;
-            if (Math.Round(Math.Abs(diasTranscurridos)) >= 30)
+            if (Math.Round(Math.Abs(diasTranscurridos)) < 60)
                 v = Math.Round(Math.Abs(diasTranscurridos) / 30).ToString() + " meses";
             else if (objConvertidorRangoTiempoSiguiente != null)
             {

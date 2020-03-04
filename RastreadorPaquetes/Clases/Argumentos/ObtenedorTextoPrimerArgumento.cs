@@ -1,4 +1,6 @@
-﻿namespace RastreadorPaquetes
+﻿using System;
+
+namespace RastreadorPaquetes
 {
     public class ObtenedorTextoPrimerArgumento : IObtenedorTextoArgumentos
     {

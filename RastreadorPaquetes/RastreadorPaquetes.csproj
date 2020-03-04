@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,16 +46,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Clases\Archivos\DeserializadorConfiguracionEmpresas.cs" />
+    <Compile Include="Clases\Archivos\DeserializadorConfiguracionMediosTransporte.cs" />
+    <Compile Include="Clases\Archivos\IDeserializadorConfiguracionEmpresas.cs" />
+    <Compile Include="Clases\Archivos\IDeserializadorConfiguracionMediosTransporte.cs" />
     <Compile Include="Clases\Archivos\ILectorArchivoTexto.cs" />
+    <Compile Include="Clases\Archivos\IObtenedorDatosEmpresasJSON.cs" />
+    <Compile Include="Clases\Archivos\IObtenedorDatosMediosTransporteJSON.cs" />
     <Compile Include="Clases\Archivos\IObtenedorRegistrosArchivoListaStrings.cs" />
     <Compile Include="Clases\Archivos\IValidadorArchivo.cs" />
     <Compile Include="Clases\Archivos\LectorArchivoTexto.cs" />
+    <Compile Include="Clases\Archivos\ObtenedorDatosEmpresasJSON.cs" />
+    <Compile Include="Clases\Archivos\ObtenedorDatosMediosTransporteJSON.cs" />
+    <Compile Include="Clases\Archivos\ObtenedorDatosStrategyCSV.cs" />
     <Compile Include="Clases\Archivos\ObtenedorRegistrosArchivoListaStrings.cs" />
     <Compile Include="Clases\Archivos\ValidarArchivoTexto.cs" />
+    <Compile Include="Clases\Archivos\IObtenedorDatosStrategy.cs" />
     <Compile Include="Clases\Argumentos\IObtenedorTextoArgumentos.cs" />
+    <Compile Include="Clases\Argumentos\IObtenerdorTextoArgumentoFormato.cs" />
+    <Compile Include="Clases\Archivos\ObtenedorDatosStrategyJSON.cs" />
     <Compile Include="Clases\Argumentos\ObtenedorTextoPrimerArgumento.cs" />
+    <Compile Include="Clases\Argumentos\ObtenerdorTextoArgumentoFormato.cs" />
     <Compile Include="Clases\ProcesadorDatos\EntradaDatos\DivisorLinea.cs" />
     <Compile Include="Clases\ProcesadorDatos\EntradaDatos\IDivisorLinea.cs" />
+    <Compile Include="Clases\ProcesadorDatos\SalidaDatos\ConvertidorRangoTiempoAPalabras\ConvertidorRangoTiempoAnios.cs" />
+    <Compile Include="Clases\ProcesadorDatos\SalidaDatos\ConvertidorRangoTiempoAPalabras\ConvertidorRangoTiempoSemanas.cs" />
+    <Compile Include="Clases\ProcesadorDatos\SalidaDatos\ConvertidorRangoTiempoBimestres.cs" />
     <Compile Include="Datos\DatosEntrada.cs" />
     <Compile Include="Datos\IDatosEntrada.cs" />
     <Compile Include="Clases\ProcesadorDatos\EntradaDatos\DirectorDatosEntrada.cs" />
@@ -64,9 +83,12 @@
     <Compile Include="Clases\ProcesadorDatos\SalidaDatos\ConstructorDatosSalida.cs" />
     <Compile Include="Clases\ProcesadorDatos\SalidaDatos\DirectorMensajeSalida.cs" />
     <Compile Include="Clases\Salida\Desplegador.cs" />
+    <Compile Include="Empresas\EmpresaDatos.cs" />
+    <Compile Include="Empresas\Empresa.cs" />
     <Compile Include="Empresas\Estafeta.cs" />
     <Compile Include="Empresas\Fedex.cs" />
     <Compile Include="Empresas\DHL.cs" />
+    <Compile Include="Empresas\IEmpresaDatos.cs" />
     <Compile Include="Empresas\IEmpresa.cs" />
     <Compile Include="Empresas\FabricaEmpresas.cs" />
     <Compile Include="Empresas\IFabricaEmpresas.cs" />
@@ -76,6 +98,7 @@
     <Compile Include="Clases\ProcesadorDatos\SalidaDatos\IConstructorDatosSalida.cs" />
     <Compile Include="Clases\ProcesadorDatos\SalidaDatos\IDirectorMensajeSalida.cs" />
     <Compile Include="Clases\Salida\IDesplegador.cs" />
+    <Compile Include="MediosTransporte\MedioTransporte.cs" />
     <Compile Include="Modulos\IModuloComparadorOpciones.cs" />
     <Compile Include="MediosTransporte\FabricaMediosTransporte.cs" />
     <Compile Include="MediosTransporte\IFabricaMediosTransporte.cs" />
@@ -92,6 +115,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="entregas.csv" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

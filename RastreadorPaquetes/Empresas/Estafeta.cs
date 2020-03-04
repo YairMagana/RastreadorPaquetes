@@ -9,11 +9,28 @@ namespace RastreadorPaquetes
         public double dMargenUtilidad { get; set; }
         public List<Type> lstTTransportesUsados { get; set; }
 
-        public Estafeta()
+        public Estafeta(IEmpresaDatos _empresa)
         {
-            cNombre = "Estafeta";
-            dMargenUtilidad = 0.2;
-            lstTTransportesUsados = new List<Type> { typeof(Tren) };
+            cNombre = _empresa.cNombre;
+            dMargenUtilidad = _empresa.dMargenUtilidad;
+            lstTTransportesUsados = new List<Type>();
+            foreach (var e in _empresa.lstTransportesUsados)
+            {
+                switch (e.ToUpper())
+                {
+                    case "AÉREO":
+                    case "AEREO":
+                        lstTTransportesUsados.Add(typeof(Avion));
+                        break;
+                    case "MARITIMO":
+                    case "MARÍTIMO":
+                        lstTTransportesUsados.Add(typeof(Barco));
+                        break;
+                    case "TERRESTRE":
+                        lstTTransportesUsados.Add(typeof(Tren));
+                        break;
+                }
+            }
         }
     }
 }

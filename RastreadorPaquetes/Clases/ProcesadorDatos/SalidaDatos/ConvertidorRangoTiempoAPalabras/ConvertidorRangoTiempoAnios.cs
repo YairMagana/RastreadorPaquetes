@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace RastreadorPaquetes
 {
-    public class ConvertidorRangoTiempoDias : IConvertidorRangoTiempo
+    public class ConvertidorRangoTiempoAnios : IConvertidorRangoTiempo
     {
         private IConvertidorRangoTiempo objConvertidorRangoTiempoSiguiente;
 
@@ -16,8 +20,8 @@ namespace RastreadorPaquetes
         {
             string v = string.Empty;
             double diasTranscurridos = (dt1 - dt2).TotalDays;
-            if (Math.Round(Math.Abs(diasTranscurridos)) < 7)
-                v = Math.Round(Math.Abs(diasTranscurridos)).ToString() + " días";
+            if (Math.Round(Math.Abs(diasTranscurridos)) >= 365)
+                v = Math.Round(Math.Abs(diasTranscurridos) / 365).ToString() + " años";
             else if (objConvertidorRangoTiempoSiguiente != null)
             {
                 v = objConvertidorRangoTiempoSiguiente.ConvertirRangoTiempoAPalabras(dt1, dt2);

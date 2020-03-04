@@ -6,10 +6,16 @@ namespace RastreadorPaquetes
     public class ObtenedorRegistrosArchivoListaStrings : IObtenedorRegistrosArchivoListaStrings
     {
         private readonly ILectorArchivoTexto lectorArchivoTexto;
+        private string cTipoArchivo;
+        private IObtenedorDatosStrategy estategiaCSV;
+        private IObtenedorDatosStrategy estategiaJSON;
 
-        public ObtenedorRegistrosArchivoListaStrings(ILectorArchivoTexto lectorArchivoTexto)
+        public ObtenedorRegistrosArchivoListaStrings(ILectorArchivoTexto _lectorArchivoTexto, string _cTipoArchivo, IObtenedorDatosStrategy _estategiaCSV, IObtenedorDatosStrategy _estategiaJSON)
         {
-            this.lectorArchivoTexto = lectorArchivoTexto;
+            lectorArchivoTexto = _lectorArchivoTexto;
+            cTipoArchivo = _cTipoArchivo;
+            estategiaCSV = _estategiaCSV;
+            estategiaJSON = _estategiaJSON;
         }
 
         public List<string> ObtenerRegistrosArchivo()
@@ -22,7 +28,21 @@ namespace RastreadorPaquetes
                     if (!string.IsNullOrEmpty(linea))
                         lstTexto.Add(linea);
             }
-            return lstTexto;
+
+            return ObtenerListaDatosPorTipo(lstTexto);
+        }
+
+        private List<string> ObtenerListaDatosPorTipo(List<string> _lstTexto)
+        {
+            switch (cTipoArchivo)
+            {
+                case "CSV":
+                    return estategiaCSV.ObtenerDatos(_lstTexto);
+                case "JSON":
+                    return estategiaJSON.ObtenerDatos(_lstTexto);
+                default:
+                    return _lstTexto;
+            }
         }
     }
 }

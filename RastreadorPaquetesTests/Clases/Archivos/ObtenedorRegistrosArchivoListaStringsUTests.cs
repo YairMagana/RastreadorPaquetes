@@ -24,7 +24,7 @@ namespace RastreadorPaquetes.Tests
             var DOCILectorArchivoTexto = new Mock<ILectorArchivoTexto>();
             DOCILectorArchivoTexto.Setup(s => s.LeerArchivoTexto()).Returns(new StreamReader(memoryStream));
 
-            var SUT = new ObtenedorRegistrosArchivoListaStrings(DOCILectorArchivoTexto.Object);
+            var SUT = new ObtenedorRegistrosArchivoListaStrings(DOCILectorArchivoTexto.Object, "CSV", null, null);
 
             //Act
             var resultado = SUT.ObtenerRegistrosArchivo();

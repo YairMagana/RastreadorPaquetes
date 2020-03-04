@@ -2,7 +2,7 @@
 
 namespace RastreadorPaquetes
 {
-    public class ConvertidorRangoTiempoDias : IConvertidorRangoTiempo
+    public class ConvertidorRangoTiempoSemanas : IConvertidorRangoTiempo
     {
         private IConvertidorRangoTiempo objConvertidorRangoTiempoSiguiente;
 
@@ -16,8 +16,8 @@ namespace RastreadorPaquetes
         {
             string v = string.Empty;
             double diasTranscurridos = (dt1 - dt2).TotalDays;
-            if (Math.Round(Math.Abs(diasTranscurridos)) < 7)
-                v = Math.Round(Math.Abs(diasTranscurridos)).ToString() + " días";
+            if (Math.Round(Math.Abs(diasTranscurridos)) < 30)
+                v = Math.Round(Math.Abs(diasTranscurridos) / 7).ToString() + " semanas";
             else if (objConvertidorRangoTiempoSiguiente != null)
             {
                 v = objConvertidorRangoTiempoSiguiente.ConvertirRangoTiempoAPalabras(dt1, dt2);

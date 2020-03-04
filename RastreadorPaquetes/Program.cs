@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using System;
+using System.Collections.Generic;
 
 namespace RastreadorPaquetes
 {
@@ -14,27 +16,49 @@ namespace RastreadorPaquetes
                 /*** SERVICIOS ***/
                 // ** Argumento
                 IObtenedorTextoArgumentos obtenedorTextoPrimerArgumento = new ObtenedorTextoPrimerArgumento(args);
-                //  Archivo
+                IObtenerdorTextoArgumentoFormato obtenerdorTextoArgumentoFormato = new ObtenerdorTextoArgumentoFormato(args);
+
+                // Archivo de Configuración
                 IValidadorArchivo validadorArchivo = new ValidarArchivoTexto();
-                ILectorArchivoTexto lectorArchivoTexto = new LectorArchivoTexto(obtenedorTextoPrimerArgumento.ObtenerTextoArgumentos(), validadorArchivo);
-                IObtenedorRegistrosArchivoListaStrings obtenedorContenidoArchivoListaStrings = new ObtenedorRegistrosArchivoListaStrings(lectorArchivoTexto);
+                ILectorArchivoTexto lectorArchivoTexto = new LectorArchivoTexto("Config.json", validadorArchivo);
+
+                IObtenedorDatosMediosTransporteJSON obtenedorDatosMediosTransporteJSON = new ObtenedorDatosMediosTransporteJSON();
+                IDeserializadorConfiguracionMediosTransporte deserializadorConfiguracionTransportes = new DeserializadorConfiguracionMediosTransporte(lectorArchivoTexto, obtenedorDatosMediosTransporteJSON);
+                List<IMedioTransporte> mediosTransporte = deserializadorConfiguracionTransportes.DeserializarMediosTransporte();
+
+                IObtenedorDatosEmpresasJSON obtenedorDatosEmpresas = new ObtenedorDatosEmpresasJSON();
+                IDeserializadorConfiguracionEmpresas deserializadorConfiguracionEmpresas = new DeserializadorConfiguracionEmpresas(lectorArchivoTexto, obtenedorDatosEmpresas);
+                List<IEmpresaDatos> empresasDatos = deserializadorConfiguracionEmpresas.DeserializarEmpresas();
+
+                //  Archivo Datos
+                lectorArchivoTexto = new LectorArchivoTexto(obtenedorTextoPrimerArgumento.ObtenerTextoArgumentos(), validadorArchivo);
+
+                IObtenedorDatosStrategy estategiaCSV = new ObtenedorDatosStrategyCSV();
+                IObtenedorDatosStrategy estategiaJSON = new ObtenedorDatosStrategyJSON();
+                IObtenedorRegistrosArchivoListaStrings obtenedorContenidoArchivoListaStrings = new ObtenedorRegistrosArchivoListaStrings(lectorArchivoTexto, obtenerdorTextoArgumentoFormato.ObtenerTextoArgumentoFormato(), estategiaCSV, estategiaJSON);
 
                 // ** Procesamiento
                 IDivisorLinea divisorLinea = new DivisorLinea();
 
                 // * Creación de Fábricas: Empresas y Medios de Transporte
-                IFabricaEmpresas fabricaEmpresas = new FabricaEmpresas();
-                IFabricaMediosTransporte fabricaMediosTransporte = new FabricaMediosTransporte();
+                IFabricaEmpresas fabricaEmpresas = new FabricaEmpresas(empresasDatos);
+                IFabricaMediosTransporte fabricaMediosTransporte = new FabricaMediosTransporte(mediosTransporte);
 
                 //  Creación de obtención de Rangos de Tiempos con Cadena de Responsabilidad
+                IConvertidorRangoTiempo convertidorRangoAnios = new ConvertidorRangoTiempoAnios();
+                IConvertidorRangoTiempo convertidorRangoBimestres = new ConvertidorRangoTiempoBimestres();
                 IConvertidorRangoTiempo convertidorRangoMeses = new ConvertidorRangoTiempoMeses();
+                IConvertidorRangoTiempo convertidorRangoSemanas = new ConvertidorRangoTiempoSemanas();
                 IConvertidorRangoTiempo convertidorRangoDias = new ConvertidorRangoTiempoDias();
                 IConvertidorRangoTiempo convertidorRangoHoras = new ConvertidorRangoTiempoHoras();
                 IConvertidorRangoTiempo convertidorRangoMinutos = new ConvertidorRangoTiempoMinutos();
 
                 convertidorRangoMinutos.EstablecerSiguienteConvertidor(convertidorRangoHoras);
                 convertidorRangoHoras.EstablecerSiguienteConvertidor(convertidorRangoDias);
-                convertidorRangoDias.EstablecerSiguienteConvertidor(convertidorRangoMeses);
+                convertidorRangoDias.EstablecerSiguienteConvertidor(convertidorRangoSemanas);
+                convertidorRangoSemanas.EstablecerSiguienteConvertidor(convertidorRangoMeses);
+                convertidorRangoMeses.EstablecerSiguienteConvertidor(convertidorRangoBimestres);
+                convertidorRangoBimestres.EstablecerSiguienteConvertidor(convertidorRangoAnios);
 
                 // * Herramientas para procesamiento
                 IDatosEntrada datosEntrada = new DatosEntrada();
@@ -42,6 +66,8 @@ namespace RastreadorPaquetes
 
                 // ** Modulo Comparador de Opciones
                 IModuloComparadorOpciones moduloComparadorOpciones = new ModuloComparadorOpciones(fabricaEmpresas, fabricaMediosTransporte);
+
+                // * Analizar los Envíos
                 RastrearPaquetes(obtenedorContenidoArchivoListaStrings, divisorLinea, fabricaEmpresas, fabricaMediosTransporte, convertidorRangoMinutos, datosEntrada, datosSalida, desplegador, moduloComparadorOpciones);
             }
             catch (Exception ex)

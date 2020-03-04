@@ -42,7 +42,7 @@ namespace RastreadorPaquetes
                 empresa.lstTransportesUsados = new List<string>();
                 foreach (var medio in empr.Medios)
                 {
-                    empresa.lstTransportesUsados.Add(medio.ToString());
+                    empresa.lstTransportesUsados.Add(medio.Medio);
                 }
                 empresas.Add(empresa);
             }

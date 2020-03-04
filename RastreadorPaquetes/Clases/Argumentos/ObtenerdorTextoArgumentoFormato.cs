@@ -21,7 +21,7 @@ namespace RastreadorPaquetes
             {
                 if (args[1].ToUpper() == "-F")
                 {
-                    if(args != null && args.Length > 2 && (args[2] == "CSV" || args[2] == "JSON"))
+                    if(args != null && args.Length > 2 && (args[2].ToUpper() == "CSV" || args[2].ToUpper() == "JSON"))
                     {
                         return args[2];
                     } else

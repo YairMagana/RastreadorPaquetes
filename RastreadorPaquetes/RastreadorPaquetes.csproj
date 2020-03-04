@@ -114,8 +114,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Config.json" />
     <None Include="entregas.csv" />
     <None Include="packages.config" />
+    <None Include="Pedidos.json" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

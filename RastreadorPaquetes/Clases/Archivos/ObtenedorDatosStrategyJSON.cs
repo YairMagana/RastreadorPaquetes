@@ -39,6 +39,7 @@ namespace RastreadorPaquetes
                 cRegistro += pedido.Destino + ",";
                 cRegistro += pedido.Dist_KM + ",";
                 cRegistro += pedido.Empresa + ",";
+                cRegistro += pedido.MedioTrans + ",";
                 cRegistro += pedido.FechaPedido;
                 _lstLineas.Add(cRegistro);
             }

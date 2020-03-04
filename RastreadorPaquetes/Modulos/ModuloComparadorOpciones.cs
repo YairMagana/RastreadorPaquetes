@@ -15,9 +15,9 @@ namespace RastreadorPaquetes
                 _fabricaEmpresas.FabricarEmpresa("Fedex") };
 
             lstMediosTransporte = new List<IMedioTransporte> { 
-                _fabricaMediosTransporte.FabricarMedioTransporte("Tren"),
-                _fabricaMediosTransporte.FabricarMedioTransporte("Barco"),
-                _fabricaMediosTransporte.FabricarMedioTransporte("Avión") };
+                _fabricaMediosTransporte.FabricarMedioTransporte("Terrestre"),
+                _fabricaMediosTransporte.FabricarMedioTransporte("Marítimo"),
+                _fabricaMediosTransporte.FabricarMedioTransporte("Aéreo") };
         }
 
         public string GenerarMensajeOpcionOptima(string _cEmpresaActual, IMedioTransporte _medioTransporteActual, double _dCostoActual, double _dDistancia)
